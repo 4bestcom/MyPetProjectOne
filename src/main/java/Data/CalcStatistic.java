@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalcStatistic {
+
     private final List<Integer> list = new ArrayList<>();
     private int day = 1;
 

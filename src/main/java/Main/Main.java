@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main implements Serializable {
-
+    
     private  List<Statistic> list = new ArrayList<>();
 
 
@@ -25,8 +25,6 @@ public class Main implements Serializable {
         CalcStatistic calcStatistic = new CalcStatistic();
         calcStatistic.calculateStatistic(m);
     }
-
-
 
     public  List<Statistic> getList() {
         return list;

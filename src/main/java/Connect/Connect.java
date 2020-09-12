@@ -19,6 +19,7 @@ import java.util.Date;
 
 
 public class Connect implements IConnect, IParseJson{
+
     private int index = 1;
     private String jsonString;
 

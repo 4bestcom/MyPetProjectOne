@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Statistic implements Serializable {
+
     private int confirmed;
     private int deaths;
     private String date;

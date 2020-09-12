@@ -5,7 +5,6 @@ import java.io.*;
 import java.util.List;
 
 public class SerializableDeSerializable {
-
     private final String fileName = "d:coronaListStatistic.data";
     private Main m;
 
