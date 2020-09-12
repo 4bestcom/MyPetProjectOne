@@ -1,1 +1,1 @@
-This program connects to the Hpkins Institute, collects data on infected coronaviruses, saves this data to a local disk. when it is launched, it first takes previous data from the local disk, then downloads the latest data and analyzes it.
+This program connects to the Hopkins Institute, collects data on infected coronaviruses, saves this data to a local disk. when it is launched, it first takes previous data from the local disk, then downloads the latest data and analyzes it.
