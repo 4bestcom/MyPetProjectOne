@@ -22,12 +22,17 @@ public class Connect implements IConnect, IParseJson{
 
     private int index = 1;
     private String jsonString;
+    private int confirmed;
+    private int deaths;
 
 
     public void connectToApi() {
-        String url = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?sourse=jhu&country_code=RU";
+        long oneDay = 24 * 3600 * 1000L;
+        String dateToDay = new SimpleDateFormat("MM-dd-yyyy").format(new Date().getTime() - oneDay);
+        String nameUrl = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
+                + dateToDay + ".csv";
         try {
-            HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(nameUrl).openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setUseCaches(false);
             httpURLConnection.setConnectTimeout(10000);
@@ -36,9 +41,20 @@ public class Connect implements IConnect, IParseJson{
 
             if (HttpURLConnection.HTTP_OK == httpURLConnection.getResponseCode()) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                jsonString = reader.readLine();
+                while (true) {
+                    String b = reader.readLine();
+                    if (b.contains("Udmurt Republic,Russia")) {
+                        String [] arr = b.split(",");
+                        confirmed = Integer.parseInt(arr [7]);
+                        deaths = Integer.parseInt(arr [8]);
+                        break;
+                    }
+                }
                 reader.close();
+            } else {
+                System.out.println("Подключение прошло неудачно " + httpURLConnection.getResponseCode());
             }
+
             httpURLConnection.disconnect();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -46,12 +62,6 @@ public class Connect implements IConnect, IParseJson{
     }
 
     public Statistic parseJson(Main obj) {
-        JsonElement jsonElement = JsonParser.parseString(jsonString);
-        JsonObject details = jsonElement.getAsJsonObject();
-        JsonElement confJs = details.get("latest").getAsJsonObject().get("confirmed");
-        int confirmed = confJs.getAsInt();
-        JsonElement confJs1 = details.get("latest").getAsJsonObject().get("deaths");
-        int deaths = confJs1.getAsInt();
         for (Statistic s : obj.getList()) {
             if (s.getDate().equals(new SimpleDateFormat("dd.MM.yyyy").format(new Date())))
                 System.exit(0);
