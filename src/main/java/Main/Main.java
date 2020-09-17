@@ -11,13 +11,14 @@ import java.util.List;
 
 public class Main implements Serializable {
 
-    private  List<Statistic> list = new ArrayList<>();
-
+    private final List<Statistic> list = new ArrayList<>();
+    private static Main m;
 
     public static void main(String[] args) throws IOException {
 
         SerializableDeSerializable serilizAndDesiriliz = new SerializableDeSerializable();
-        Main m = serilizAndDesiriliz.deSerializable();
+        checkObjMain(serilizAndDesiriliz);
+        m = serilizAndDesiriliz.deSerializable();
         Connect connect = new Connect();
         connect.connectToApi();
         m.getList().add(connect.parseJson(m));
@@ -28,5 +29,13 @@ public class Main implements Serializable {
 
     public  List<Statistic> getList() {
         return list;
+    }
+
+    public static Main checkObjMain (SerializableDeSerializable ser) {
+        if (m == null){
+            m = new Main();
+            ser.serializable(m);
+        }
+        return m;
     }
 }
