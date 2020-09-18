@@ -11,17 +11,17 @@ import java.util.List;
 
 public class Main implements Serializable {
 
-    private final List<Statistic> list = new ArrayList<>();
-    private static Main m;
+    private List<Statistic> list = new ArrayList<>();
+
 
     public static void main(String[] args) throws IOException {
 
         SerializableDeSerializable serilizAndDesiriliz = new SerializableDeSerializable();
-        checkObjMain(serilizAndDesiriliz);
-        m = serilizAndDesiriliz.deSerializable();
+        Main m;
+        m = checkObjMainSeril(serilizAndDesiriliz);
         Connect connect = new Connect();
         connect.connectToApi();
-        m.getList().add(connect.parseJson(m));
+        m.list.add(connect.parseJson(m));
         serilizAndDesiriliz.serializable(m);
         CalcStatistic calcStatistic = new CalcStatistic();
         calcStatistic.calculateStatistic(m);
@@ -31,9 +31,12 @@ public class Main implements Serializable {
         return list;
     }
 
-    public static Main checkObjMain (SerializableDeSerializable ser) {
-        if (m == null){
-            m = new Main();
+    public static Main checkObjMainSeril (SerializableDeSerializable ser) {
+        Main m = new Main();
+        File file = new File(ser.getFileName());
+        if (file.exists()){
+           m = ser.deSerializable();
+        } else {
             ser.serializable(m);
         }
         return m;

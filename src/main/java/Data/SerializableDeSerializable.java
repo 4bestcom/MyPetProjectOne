@@ -6,7 +6,10 @@ import java.util.List;
 
 public class SerializableDeSerializable {
     private final String fileName = "d:coronaListStatistic.data";
-    private Main m;
+
+    public String getFileName() {
+        return fileName;
+    }
 
     public void serializable(Object obj) {
         try
@@ -19,6 +22,7 @@ public class SerializableDeSerializable {
     }
 
     public Main deSerializable() {
+        Main m = null;
         try
                 (FileInputStream fileInputStream = new FileInputStream(fileName);
                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
